@@ -167,7 +167,7 @@ export default function Header() {
                               }}
                             >
                               {chain.iconUrl && (
-                                <img
+                                <Image
                                   alt={chain.name ?? "Chain icon"}
                                   src={chain.iconUrl}
                                   style={{ width: 20, height: 20 }}

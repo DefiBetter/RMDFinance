@@ -4,7 +4,7 @@ import Image from "next/image";
 import logo from "@/src/statics/images/logo.png";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export default function Header() {
+export default function Header({ priceUSD }: { priceUSD: string }) {
   return (
     <nav className="fixed left-0 z-50 top-7 w-full flex flex-col md:flex-row justify-start px-7">
       <div className="absolute -top-2 left-5 w-7 h-7 border-l-2 border-t-2 border-slate-100/20" />
@@ -16,9 +16,9 @@ export default function Header() {
         }}
         animate={{ opacity: 1, width: "100%" }}
         transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] }}
-        className="group w-full flex h-16 bg-gradient-to-r from-slate-100/5 to-slate-100/10 items-center backdrop-blur-md"
+        className="overflow-hidden group w-full flex h-16 bg-gradient-to-r from-slate-100/5 to-slate-100/10 items-center backdrop-blur-md"
       >
-        <div className=" w-16 h-full">
+        <div className="w-16 h-full">
           <motion.div
             initial={{
               width: "10%",
@@ -36,20 +36,23 @@ export default function Header() {
           }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1, ease: "linear" }}
-          className="font-mponderosa px-5 text-4xl"
+          className="relative h-full px-5 text-4xl flex items-center w-full"
         >
           R
-          <span className="opacity-0 group-hover:opacity-100 transition-all">
+          <span className="translate-y-20 group-hover:translate-y-0 transition-all">
             E
           </span>
           M
-          <span className="opacity-0 group-hover:opacity-100 transition-all">
+          <span className="-translate-y-20 group-hover:translate-y-0 transition-all">
             E
           </span>
           D
-          <span className="opacity-0 group-hover:opacity-100 transition-all">
+          <span className="translate-y-20 group-hover:translate-y-0 transition-all">
             Y
           </span>
+          <div className="absolute bottom-1 right-2 text-sm text-slate-200">
+            ${Number(priceUSD).toFixed(4)}
+          </div>
         </motion.div>
       </motion.div>
       <motion.div

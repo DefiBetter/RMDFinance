@@ -1,9 +1,31 @@
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { Chakra_Petch } from "next/font/google";
-import Head from "next/head";
 import { Providers } from "./provider";
 import { Analytics } from "@vercel/analytics/react";
+import { Metadata } from "next";
+
+export const PAIR_ADDRESS = "bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const priceReq = await fetch(
+    `https://api.dexscreener.com/latest/dex/pairs/${PAIR_ADDRESS}`
+  );
+  try {
+    const response = await priceReq.json();
+    console.log("Response", JSON.stringify(response, null, 2));
+    const price = response.pairs[0].priceUsd;
+
+    return {
+      title: `RMD | $${price}`,
+      description: "The Remedy to Defi",
+    };
+  } catch (_) {}
+  return {
+    title: `RMD`,
+    description: "The Remedy to Defi",
+  };
+}
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -12,10 +34,9 @@ const chakra = Chakra_Petch({
   weight: ["400", "700"],
 });
 
-export const metadata = {
-  title: "RMD | ReMeDy",
-  description: "The Remedy to Defi",
-};
+// export const metadata = {
+//   title: "RMD | ReMeDy",
+// };
 
 export default function RootLayout({
   children,
@@ -24,11 +45,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <title></title>
-      </Head>
-
       <body className={`${chakra.className} `}>
         <Providers>{children}</Providers>
         <Analytics />

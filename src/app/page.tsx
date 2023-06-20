@@ -3,11 +3,23 @@ import Header from "@/src/components/Header";
 import backgroundPoster from "@/src/statics/images/poster.jpg";
 import BackgroundLines from "@/src/components/BackgroundLines";
 import { motion } from "framer-motion";
+import useSWR from "swr";
+import Head from "next/head";
+import { PAIR_ADDRESS } from "./layout";
+
+const fetcher = (url: RequestInfo | URL) =>
+  fetch(url).then((res) => res.json());
 
 export default function Home() {
+  const { data, error, isLoading } = useSWR(
+    `https://api.dexscreener.com/latest/dex/pairs/${PAIR_ADDRESS}`,
+    fetcher
+  );
+
+  console.log("data = ", JSON.stringify(data, null, 2));
   return (
     <main className="flex items-stretch justify-center">
-      <Header />
+      <Header priceUSD={data?.pairs[0].priceUsd} />
       <BackgroundLines />
 
       <video

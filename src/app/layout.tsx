@@ -5,15 +5,12 @@ import { Providers } from "./provider";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 
-export const PAIR_ADDRESS = "bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087";
-
 export async function generateMetadata(): Promise<Metadata> {
   const priceReq = await fetch(
-    `https://api.dexscreener.com/latest/dex/pairs/${PAIR_ADDRESS}`
+    `https://api.dexscreener.com/latest/dex/pairs/bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087`
   );
   try {
     const response = await priceReq.json();
-    console.log("Response", JSON.stringify(response, null, 2));
     const price = response.pairs[0].priceUsd;
 
     return {

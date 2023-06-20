@@ -4,19 +4,15 @@ import backgroundPoster from "@/src/statics/images/poster.jpg";
 import BackgroundLines from "@/src/components/BackgroundLines";
 import { motion } from "framer-motion";
 import useSWR from "swr";
-import Head from "next/head";
-import { PAIR_ADDRESS } from "./layout";
 
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
 
 export default function Home() {
   const { data, error, isLoading } = useSWR(
-    `https://api.dexscreener.com/latest/dex/pairs/${PAIR_ADDRESS}`,
+    `https://api.dexscreener.com/latest/dex/pairs/bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087`,
     fetcher
   );
-
-  console.log("data = ", JSON.stringify(data, null, 2));
   return (
     <main className="flex items-stretch justify-center">
       <Header priceUSD={data?.pairs[0].priceUsd} />

@@ -4,12 +4,8 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { Chakra_Petch } from "next/font/google";
 import Head from "next/head";
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { bsc } from "wagmi/chains";
-import { Suspense, useEffect, useState } from "react";
 import { Providers } from "./provider";
-
+import { Analytics } from "@vercel/analytics/react";
 export const metadata = {
   title: "ReMeDy",
   description: "A simple portfolio, for fun",
@@ -35,6 +31,7 @@ export default function RootLayout({
 
       <body className={`${chakra.className} `}>
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );

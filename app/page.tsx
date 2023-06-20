@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import backgroundPoster from "@/statics/images/poster.jpg";
 import BackgroundLines from "@/components/BackgroundLines";
 import { motion } from "framer-motion";
+
 export default function Home() {
   return (
     <main className="flex items-stretch justify-center">

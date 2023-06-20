@@ -1,7 +1,7 @@
 import { BsDiscord, BsTwitter } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import logo from "@/statics/images/logo.png";
+import logo from "@/src/statics/images/logo.png";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Header() {

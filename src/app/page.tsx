@@ -1,16 +1,12 @@
 "use client";
-import Header from "@/components/Header";
-import backgroundPoster from "@/statics/images/poster.jpg";
-import BackgroundLines from "@/components/BackgroundLines";
+import Header from "@/src/components/Header";
+import backgroundPoster from "@/src/statics/images/poster.jpg";
+import BackgroundLines from "@/src/components/BackgroundLines";
 import { motion } from "framer-motion";
-import Head from "next/head";
 
 export default function Home() {
   return (
     <main className="flex items-stretch justify-center">
-      <Head>
-        <title>RMD | ReMeDy</title>
-      </Head>
       <Header />
       <BackgroundLines />
 
@@ -29,7 +25,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2, duration: 1}}
+          transition={{ delay: 2, duration: 1 }}
           className="text-5xl md:text-7xl mt-48 w-full flex justify-center"
         >
           COMING SOON!

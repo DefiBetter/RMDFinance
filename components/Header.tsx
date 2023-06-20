@@ -170,7 +170,8 @@ export default function Header() {
                                 <Image
                                   alt={chain.name ?? "Chain icon"}
                                   src={chain.iconUrl}
-                                  style={{ width: 20, height: 20 }}
+                                  width={20}
+                                  height={20}
                                 />
                               )}
                             </div>

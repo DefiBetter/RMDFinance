@@ -3,10 +3,14 @@ import Header from "@/components/Header";
 import backgroundPoster from "@/statics/images/poster.jpg";
 import BackgroundLines from "@/components/BackgroundLines";
 import { motion } from "framer-motion";
+import Head from "next/head";
 
 export default function Home() {
   return (
     <main className="flex items-stretch justify-center">
+      <Head>
+        <title>RMD | ReMeDy</title>
+      </Head>
       <Header />
       <BackgroundLines />
 

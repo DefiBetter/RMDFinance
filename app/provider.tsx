@@ -5,7 +5,7 @@ import {
   RainbowKitProvider,
   getDefaultWallets,
   connectorsForWallets,
-  darkTheme
+  darkTheme,
 } from "@rainbow-me/rainbowkit";
 import {
   argentWallet,
@@ -21,7 +21,9 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()]
 );
 
-const projectId = "YOUR_PROJECT_ID";
+const projectId = process.env.NEXT_PUBLIC_APP_ID
+  ? process.env.NEXT_PUBLIC_APP_ID
+  : "";
 
 const { wallets } = getDefaultWallets({
   appName: "RainbowKit demo",
@@ -57,7 +59,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
   React.useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider theme={darkTheme()} chains={chains} appInfo={demoAppInfo}>
+      <RainbowKitProvider
+        theme={darkTheme()}
+        chains={chains}
+        appInfo={demoAppInfo}
+      >
         {mounted && children}
       </RainbowKitProvider>
     </WagmiConfig>

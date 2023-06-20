@@ -12,8 +12,8 @@ module.exports = {
         "color-2": "#EA580C",
       },
       fontFamily: {
-        default: ["var(--font-poppins)"],
-        aquire: ["var(--font-aquire)"],
+        default: ["var(--font-chakra)"],
+        mponderosa: ["var(--font-mponderosa)"],
       },
       keyframes: {
         "left-right": {

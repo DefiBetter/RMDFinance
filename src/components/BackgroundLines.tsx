@@ -22,14 +22,6 @@ export default function BackgroundLines() {
         animate={{ height: "100vh" }}
         className="z-10 absolute left-[calc(75%-14.5px)] top-0 w-[1.5px] h-full bg-gradient-to-b from-slate-100/20 to-transparent"
       />
-
-      <div className="absolute right-7 bottom-7 w-[calc(25%-1rem)] h-14 z-10 flex gap-2 overflow-hidden">
-        {[...Array(40)].map((_, index) => (
-          <div key={`line-${index}`}>
-            <div className="h-full w-[1.5px] -rotate-[30deg] bg-slate-100/30"></div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

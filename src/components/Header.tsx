@@ -25,7 +25,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
             }}
             animate={{ width: "100%" }}
             transition={{ delay: 0.3, duration: 2, ease: [0.42, 0, 0.58, 1] }}
-            className="w-full h-full bg-slate-100/50 flex justify-center items-center"
+            className="w-full h-full bg-slate-100 flex justify-center items-center"
           >
             <Image src={logo} alt="logo" className="p-1" />
           </motion.div>
@@ -66,7 +66,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
       >
         <div className="flex h-full w-full">
           <div className="group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
-            <div className="z-10">ABOUT</div>
+            <div className="z-10">LEADERBOARD</div>
             <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
             <div className="absolute bottom-1 left-1 text-xs text-slate-500">
               COMING SOON
@@ -81,9 +81,6 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
               <BsDiscord size={23} />
             </div>
             <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
-            <div className="absolute bottom-1 left-1 text-xs text-slate-500">
-              002
-            </div>
           </a>
         </div>
         <div className="flex h-full w-full">
@@ -96,9 +93,6 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
               <BsTwitter size={23} />
             </div>
             <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
-            <div className="absolute bottom-1 left-1 text-xs text-slate-500">
-              003
-            </div>
           </a>
           <ConnectButton.Custom>
             {({
@@ -191,9 +185,6 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
                     })()}
                   </div>
                   <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
-                  <div className="absolute bottom-1 left-1 text-xs text-slate-500">
-                    004
-                  </div>
                 </div>
               );
             }}

@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+.remedy {
+  -webkit-text-stroke: 5px transparent;
+  background: linear-gradient(rgba(74, 222, 128, 0.7), rgba(74, 222, 128, 1));
+  -webkit-background-clip: text;
+  color: rgb(var(--background-rgb));
+  font-size: calc(30px + 18vw);
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: calc(2px + 0.4vw);
+  opacity: 0.6;
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 :root {
   --foreground-rgb: 230, 230, 230;
-  --background-rgb: 4, 3, 8;
+  --background-rgb: 15, 30, 15;
 }
 
 body {
@@ -25,7 +41,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #da9179;
+  background-color: rgb(74, 222, 128);
   border: 2px solid black;
 }
 
@@ -38,4 +54,23 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.flask-loading {
+  animation: flask-loading 2000ms infinite ease-in-out;
+}
+
+@keyframes flask-loading {
+  20% {
+    transform: rotate(-50deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  60% {
+    transform: rotate(-30deg);
+  }
+  90% {
+    transform: rotate(5deg);
+  }
 }

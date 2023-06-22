@@ -6,9 +6,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Header({ priceUSD }: { priceUSD: string }) {
   return (
-    <nav className="fixed left-0 z-50 top-7 w-full flex flex-col md:flex-row justify-start px-7">
-      <div className="absolute -top-2 left-5 w-7 h-7 border-l-2 border-t-2 border-slate-100/20" />
-      <div className="absolute -bottom-2 right-5 w-7 h-7 border-r-2 border-b-2 border-slate-100/20" />
+    <nav className="fixed left-0 z-50 top-7 w-full flex flex-col md:flex-row justify-start px-4 md:px-7">
+      <div className="absolute -top-2 left-2 md:left-5 w-7 h-7 border-l-2 border-t-2 border-green-400/60" />
+      <div className="absolute -bottom-2 right-2 md:right-5 w-7 h-7 border-r-2 border-b-2 border-green-400/60" />
       <motion.div
         initial={{
           opacity: 0.5,
@@ -16,16 +16,16 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         }}
         animate={{ opacity: 1, width: "100%" }}
         transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] }}
-        className="overflow-hidden group w-full flex h-16 bg-gradient-to-r from-slate-100/5 to-slate-100/10 items-center backdrop-blur-md"
+        className="overflow-hidden group w-full flex h-16 bg-gradient-to-r from-slate-100/10 to-slate-100/20 items-center backdrop-blur-md"
       >
-        <div className="w-16 h-full">
+        <div className="w-20 h-full">
           <motion.div
             initial={{
               width: "10%",
             }}
             animate={{ width: "100%" }}
             transition={{ delay: 0.3, duration: 2, ease: [0.42, 0, 0.58, 1] }}
-            className="w-full h-full bg-slate-100 flex justify-center items-center"
+            className="w-full h-full bg-green-400 flex justify-center items-center"
           >
             <Image src={logo} alt="logo" className="p-1" />
           </motion.div>
@@ -39,15 +39,15 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
           className="relative h-full px-5 text-4xl flex items-center w-full"
         >
           R
-          <span className="translate-y-20 group-hover:translate-y-0 transition-all">
+          <span className="text-green-400 translate-y-20 group-hover:translate-y-0 transition-all">
             E
           </span>
           M
-          <span className="-translate-y-20 group-hover:translate-y-0 transition-all">
+          <span className="text-green-400 -translate-y-20 group-hover:translate-y-0 transition-all">
             E
           </span>
           D
-          <span className="translate-y-20 group-hover:translate-y-0 transition-all">
+          <span className="text-green-400 translate-y-20 group-hover:translate-y-0 transition-all">
             Y
           </span>
           <div className="absolute bottom-1 right-2 text-sm text-slate-200">
@@ -67,8 +67,8 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         <div className="flex h-full w-full">
           <div className="group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
             <div className="z-10">LEADERBOARD</div>
-            <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
-            <div className="absolute bottom-1 left-1 text-xs text-slate-500">
+            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className="absolute bottom-1 left-1 text-xs text-green-400">
               COMING SOON
             </div>
           </div>
@@ -77,10 +77,12 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
             target="_blank"
             className="group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
           >
-            <div className="z-10">
-              <BsDiscord size={23} />
+            <BsDiscord size={23} className="z-10 group-hover:animate-wiggle" />
+
+            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className="absolute bottom-1 left-1 text-xs text-green-400">
+              Di
             </div>
-            <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </a>
         </div>
         <div className="flex h-full w-full">
@@ -89,10 +91,11 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
             target="_blank"
             className="group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
           >
-            <div className="z-10">
-              <BsTwitter size={23} />
+            <BsTwitter size={23} className="z-10 group-hover:animate-wiggle" />
+            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className="absolute bottom-1 left-1 text-xs text-green-400">
+              Tw
             </div>
-            <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </a>
           <ConnectButton.Custom>
             {({
@@ -184,7 +187,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
                       );
                     })()}
                   </div>
-                  <div className="z-0 group-hover:w-full bg-slate-100 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+                  <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
                 </div>
               );
             }}

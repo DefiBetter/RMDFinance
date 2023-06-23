@@ -16,7 +16,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         }}
         animate={{ opacity: 1, width: "100%" }}
         transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] }}
-        className="overflow-hidden group w-full flex h-16  items-center backdrop-blur-md bg-slate-100/20"
+        className="overflow-hidden group w-full flex h-16 z-50 items-center backdrop-blur-md bg-slate-100/20"
       >
         <div className="w-20 h-full">
           <motion.div
@@ -51,7 +51,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
             Y
           </span>
           <div className="absolute bottom-1 right-2 text-sm text-slate-200">
-            ${Number(priceUSD).toFixed(4)}
+            {priceUSD ? `$${Number(priceUSD).toFixed(4)}` : "Loading"}
           </div>
         </motion.div>
       </motion.div>
@@ -62,7 +62,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         }}
         animate={{ opacity: 1, height: "4rem" }}
         transition={{ delay: 1.5, duration: 1, ease: [0.42, 0, 0.58, 1] }}
-        className="w-full flex h-16 backdrop-blur-md"
+        className="z-50 w-full flex h-16 backdrop-blur-md"
       >
         <div className="flex h-full w-full">
           <div className="backdrop-blur-md group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">

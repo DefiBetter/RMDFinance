@@ -40,7 +40,7 @@ export default function Swap({
   const amountOut = useGetAmountsOut(amountIn, [tokenIn, tokenOut]);
   const allowance = useAllowance();
   const nativeBalance = useTokenBalance(undefined);
-  const rmmBalance = useTokenBalance(contracts[56].rmd.address);
+  const rmdBalance = useTokenBalance(contracts[56].rmd.address);
 
   const formattedAmountOut = Number(formatEther(amountOut as bigint)).toFixed(
     5
@@ -85,8 +85,8 @@ export default function Swap({
     }
     return (
       <span>
-        SWAP {Number(valueA).toFixed(5)} {mode === BUY ? `BNB` : `RMM`} to{" "}
-        {formattedAmountOut} {mode === BUY ? `RMM` : `BNB`}
+        SWAP {Number(valueA).toFixed(5)} {mode === BUY ? `BNB` : `RMD`} to{" "}
+        {formattedAmountOut} {mode === BUY ? `RMD` : `BNB`}
       </span>
     );
   }
@@ -102,11 +102,11 @@ export default function Swap({
         <div className="z-10 flex items-center gap-5">
           {mode === BUY ? (
             <>
-              BUY RMM <GiBuyCard size={30} className="text-green-400" />
+              BUY RMD <GiBuyCard size={30} className="text-green-400" />
             </>
           ) : (
             <>
-              SELL RMM <GiSellCard size={30} className="text-red-400" />
+              SELL RMD <GiSellCard size={30} className="text-red-400" />
             </>
           )}
         </div>
@@ -127,8 +127,8 @@ export default function Swap({
             onClick={() => {
               if (mode === BUY && nativeBalance) {
                 setValueA((Number(nativeBalance.formatted) - 0.001).toString());
-              } else if (mode === SELL && rmmBalance) {
-                setValueA(formatEther(rmmBalance.value));
+              } else if (mode === SELL && rmdBalance) {
+                setValueA(formatEther(rmdBalance.value));
               }
             }}
             className="group cursor-pointer relative whitespace-nowrap gap-2 px-2 flex items-center border-[1px] border-slate-100/20 h-10 hover:text-black transition-colors duration-500"
@@ -144,7 +144,7 @@ export default function Swap({
               ) : (
                 <span>
                   {" "}
-                  {rmmBalance ? Number(rmmBalance.formatted).toFixed(4) : 0} RMM
+                  {rmdBalance ? Number(rmdBalance.formatted).toFixed(4) : 0} RMD
                 </span>
               )}
 
@@ -212,7 +212,7 @@ export default function Swap({
                   <GiFizzingFlask size={30} className="flask-loading" />
                 </span>
               ) : (
-                <span>APPROVE RMM</span>
+                <span>APPROVE RMD</span>
               )}
             </div>
             <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />

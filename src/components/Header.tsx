@@ -65,7 +65,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         className="w-full flex h-16 backdrop-blur-md"
       >
         <div className="flex h-full w-full">
-          <div className="group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
+          <div className="backdrop-blur-md group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
             <div className="z-10">LEADERBOARD</div>
             <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
             <div className="absolute bottom-1 left-1 text-xs text-green-400">
@@ -75,7 +75,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
           <a
             href="https://discord.gg/hYSGAXhsXw"
             target="_blank"
-            className="group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
+            className="backdrop-blur-md group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
           >
             <BsDiscord size={23} className="z-10 group-hover:animate-wiggle" />
 
@@ -89,7 +89,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
           <a
             href="https://twitter.com/RMDeFinance"
             target="_blank"
-            className="group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
+            className="backdrop-blur-md group cursor-pointer relative w-1/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
           >
             <BsTwitter size={23} className="z-10 group-hover:animate-wiggle" />
             <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
@@ -118,7 +118,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
                   authenticationStatus === "authenticated");
 
               return (
-                <div className="group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
+                <div className="backdrop-blur-md group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
                   <div
                     className="z-10 h-full w-full flex justify-center items-center"
                     {...(!ready && {

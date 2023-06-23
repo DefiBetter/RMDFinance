@@ -16,7 +16,7 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         }}
         animate={{ opacity: 1, width: "100%" }}
         transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] }}
-        className="overflow-hidden group w-full flex h-16 bg-gradient-to-r from-slate-100/10 to-slate-100/20 items-center backdrop-blur-md"
+        className="overflow-hidden group w-full flex h-16  items-center backdrop-blur-md bg-slate-100/20"
       >
         <div className="w-20 h-full">
           <motion.div

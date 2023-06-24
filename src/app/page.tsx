@@ -24,7 +24,7 @@ export default function Home() {
   );
 
   return (
-    <main className="relative flex flex-col gap-20 items-center justify-center">
+    <main className="relative flex flex-col gap-20 items-center justify-center overflow-hidden">
       <Header priceUSD={rmdData?.pairs[0].priceUsd} />
       <BackgroundDecoration />
 
@@ -33,18 +33,22 @@ export default function Home() {
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="relative z-10 h-[calc(100vh-10.75rem)] w-full px-4 md:px-7 flex flex-col justify-center gap-10 items-center"
+        className=" relative z-10 h-[calc(100vh-10.75rem)] w-full px-4 md:px-7 flex flex-col justify-center gap-10 items-center"
       >
         <div className="flex flex-col items-center">
           <h1 className="text-[6vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
             <span className="text-green-400">CRAFT</span> YOUR FUTURE{" "}
             <GiFizzingFlask className="text-green-400 animate-wiggle" />
           </h1>
-          <h2 className="text-[5vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
+          <h2 className="relative text-[5vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
             TO THE <span className="text-green-400">MOON</span>
-            <div className=" -rotate-90">
-              <GiRocket className="text-orange-400 animate-wiggle" />
-            </div>
+            <motion.div
+              animate={{ transform: "translate(1000px, -1000px)" }}
+              transition={{ delay: 3.5, duration: 2, ease: [0.8, 0, 0.58, 1] }}
+              className="absolute left-full top-1/4"
+            >
+              <GiRocket className="text-orange-400 -rotate-90" />
+            </motion.div>
           </h2>
         </div>
 

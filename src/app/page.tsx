@@ -1,11 +1,11 @@
 "use client";
 import Header from "@/src/components/Header";
-import BackgroundLines from "@/src/components/BackgroundLines";
+import BackgroundDecoration from "@/src/components/BackgroundDecoration";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 import Swap from "../components/Swap";
 import Chart from "../components/Chart";
-import Script from "next/script";
+import { GiBuyCard, GiFizzingFlask, GiRocket } from "react-icons/gi";
 
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
@@ -24,25 +24,56 @@ export default function Home() {
   );
 
   return (
-    <main className="flex items-stretch justify-center">
+    <main className="relative flex flex-col gap-20 items-center justify-center">
       <Header priceUSD={rmdData?.pairs[0].priceUsd} />
-      <BackgroundLines />
-      <video
-        autoPlay
-        muted
-        loop
-        className="object-cover w-screen h-screen fixed opacity-30"
-      >
-        <source src={"/videos/smoke.mp4"} type="video/mp4" />
-      </video>
+      <BackgroundDecoration />
 
-      {/* Screen height - Header height - header top spacing */}
-      <section className="relative w-full px-4 md:px-7 flex items-stretch z-10 overflow-hidden">
+      {/* Header height + header margin top + gap between header and this section */}
+      <motion.section
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="relative z-10 h-[calc(100vh-10.75rem)] w-full px-4 md:px-7 flex flex-col justify-center gap-10 items-center"
+      >
+        <div className="flex flex-col items-center">
+          <h1 className="text-[6vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
+            <span className="text-green-400">CRAFT</span> YOUR FUTURE{" "}
+            <GiFizzingFlask className="text-green-400 animate-wiggle" />
+          </h1>
+          <h2 className="text-[5vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
+            TO THE <span className="text-green-400">MOON</span>
+            <div className=" -rotate-90">
+              <GiRocket className="text-orange-400 animate-wiggle" />
+            </div>
+          </h2>
+        </div>
+
+        <a
+          href="#section2"
+          className="flex justify-center w-full md:w-1/2 h-16"
+        >
+          <div className="backdrop-blur-md group cursor-pointer relative w-full flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
+            <div className="z-10 font-bold flex items-center gap-4">
+              BUY RMD
+              <GiBuyCard
+                size={25}
+                className="text-green-400 group-hover:text-black transition-colors"
+              />
+            </div>
+            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+          </div>
+        </a>
+      </motion.section>
+
+      <section
+        id="section2"
+        className="relative w-full px-4 md:px-7 flex items-stretch z-10 overflow-hidden pb-16"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="mt-56 md:mt-32 w-full flex flex-col md:flex-row items-center gap-5"
+          className="w-full flex flex-col md:flex-row items-center gap-5"
         >
           <Swap
             rmdPrice={rmdData?.pairs[0].priceUsd}

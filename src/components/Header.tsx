@@ -6,7 +6,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Header({ priceUSD }: { priceUSD: string }) {
   return (
-    <nav className="fixed left-0 z-50 top-7 w-full flex flex-col md:flex-row justify-start px-4 md:px-7">
+    <nav className="relative z-50 mt-7 w-full flex flex-col md:flex-row justify-center px-4 md:px-7">
       <div className="absolute -top-2 left-2 md:left-5 w-7 h-7 border-l-2 border-t-2 border-green-400/60" />
       <div className="absolute -bottom-2 right-2 md:right-5 w-7 h-7 border-r-2 border-b-2 border-green-400/60" />
       <motion.div

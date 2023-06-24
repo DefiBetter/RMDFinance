@@ -18,10 +18,6 @@ const chakra = Chakra_Petch({
   weight: ["400", "700"],
 });
 
-// export const metadata = {
-//   title: "RMD | ReMeDy",
-// };
-
 export default function RootLayout({
   children,
 }: {
@@ -29,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${chakra.className} `}>
+      <body className={`${chakra.className}`}>
         <Suspense fallback={<LoadingScreen />}>
           <Providers>{children}</Providers>
         </Suspense>

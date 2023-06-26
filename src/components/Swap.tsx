@@ -38,7 +38,10 @@ export default function Swap({
 
   const amountIn = parseEther(valueA as `${number}`);
   const amountOut = useGetAmountsOut(amountIn, [tokenIn, tokenOut]);
-  const allowance = useAllowance();
+  const allowance = useAllowance(
+    tokenIn,
+    contracts[56].pancakeRouterV3.address
+  );
   const nativeBalance = useTokenBalance(undefined);
   const rmdBalance = useTokenBalance(contracts[56].rmd.address);
 

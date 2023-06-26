@@ -2,18 +2,15 @@ import { Address, useAccount, useContractRead } from "wagmi";
 import { contracts } from "../statics/contract";
 import { parseEther } from "viem";
 
-export default function useAllowance() {
+export default function useAllowance(tokenIn: string, spender: string) {
   const { address } = useAccount();
 
   const { data } = useContractRead({
-    address: contracts[56].rmd.address as Address,
+    address: tokenIn as Address,
     abi: contracts[56].rmd.abi,
     functionName: "allowance",
-    args: [
-      address as Address,
-      contracts[56].pancakeRouterV3.address as Address,
-    ],
-    watch: true
+    args: [address as Address, spender as Address],
+    watch: true,
   });
 
   return data ? (data as bigint) : parseEther("0");

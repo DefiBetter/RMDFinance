@@ -13,11 +13,11 @@ import {
   ledgerWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { bsc } from "wagmi/chains";
+import { arbitrum, bsc, polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bsc],
+  [bsc, arbitrum, polygon],
   [publicProvider()]
 );
 
@@ -26,7 +26,7 @@ const projectId = process.env.NEXT_PUBLIC_APP_ID
   : "";
 
 const { wallets } = getDefaultWallets({
-  appName: "RainbowKit demo",
+  appName: "RMD",
   projectId,
   chains,
 });

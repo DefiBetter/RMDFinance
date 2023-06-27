@@ -58,9 +58,9 @@ export default function Home() {
           <h2 className="relative text-[6vw] md:text-[4vw] whitespace-nowrap font-bold flex items-center gap-2 md:gap-4">
             TO THE <span className="text-green-400">MOON</span>
             <motion.div
-              animate={{ transform: "translate(1000px, -1000px)" }}
+              animate={{ transform: "translate(1000px, -1000px) scale(5)" }}
               transition={{ delay: 3.5, duration: 2, ease: [0.8, 0, 0.58, 1] }}
-              className="absolute left-full top-1/4"
+              className="absolute left-full top-1/4 scale-100"
             >
               <GiRocket className="text-orange-400 -rotate-90" />
             </motion.div>

@@ -1,25 +1,21 @@
 import {
   Address,
-  useAccount,
-  useContractRead,
   useContractWrite,
-  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { contracts } from "../statics/contract";
+import { erc20ABI } from "wagmi";
 
-export default function useApprove(amountIn: bigint | undefined) {
-  console.log("amountIn", amountIn);
-
+export default function useApprove(
+  amountIn: bigint | undefined,
+  token: Address,
+  spender: Address
+) {
   const preparation = usePrepareContractWrite({
-    address: contracts[56].rmd.address as Address,
-    abi: contracts[56].rmd.abi,
+    address: token,
+    abi: erc20ABI,
     functionName: "approve",
-    args: [
-      contracts[56].pancakeRouterV3.address as Address,
-      amountIn ? amountIn : BigInt("1000000000000000000000000"),
-    ],
+    args: [spender, amountIn ? amountIn : BigInt("1000000000000000000000000")],
     onError(err) {
       console.error(err);
     },

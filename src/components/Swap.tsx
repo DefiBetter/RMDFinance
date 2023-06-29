@@ -32,9 +32,9 @@ export default function Swap({
   const [slippage, setSlippage] = useState<string>("0.5");
 
   const tokenIn =
-    mode === BUY ? contracts[56].wbnb.address : contracts[56].rmd.address;
+    mode === BUY ? contracts[56].wnative.address : contracts[56].rmd.address;
   const tokenOut =
-    mode === BUY ? contracts[56].rmd.address : contracts[56].wbnb.address;
+    mode === BUY ? contracts[56].rmd.address : contracts[56].wnative.address;
 
   const amountIn = parseEther(valueA as `${number}`);
   const amountOut = useGetAmountsOut(amountIn, [tokenIn, tokenOut]);

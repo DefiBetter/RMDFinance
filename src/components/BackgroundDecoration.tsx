@@ -1,3 +1,4 @@
+'use client'
 import { motion } from "framer-motion";
 import Image from "next/image";
 import greenFlask from "@/src/statics/images/logo2.png";

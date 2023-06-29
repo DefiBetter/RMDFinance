@@ -2,72 +2,83 @@
 import lines from "@/src/statics/images/lines.svg";
 import Image from "next/image";
 import { GiBuyCard, GiWallet, GiFizzingFlask } from "react-icons/gi";
-import { useState } from "react";
-import { formatEther, parseEther } from "viem";
-import { ContractKey, contracts } from "../../statics/contract";
+import { useMemo, useState } from "react";
+import { Address, formatEther, parseEther } from "viem";
+import { BSC, ChainId, contracts } from "../../statics/contract";
 import useAllowance from "../../hooks/useAllowance";
 import useApprove from "../../hooks/useApprove";
-import useBuy from "../../hooks/useBuy";
-import { useAccount } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import useBuyPresale from "@/src/hooks/useBuyPresale";
+import usdc from "@/src/statics/images/USDC.png";
+import rmd from "@/src/statics/images/logo.png";
 
-const BUY_WITH_NATIVE = 0;
+const BUY_WITH_USDC = 0;
 const BUY_WITH_RMD = 1;
 
 export default function Presale({
   rmdPrice,
-  bnbPrice,
+  usdcPrice,
   chainId,
-  nativeSymbol,
-  nativeBalance,
+  address,
+  usdcBalance,
   rmdBalance,
   rmdBalanceFormatted,
   totalRaised,
 }: {
-  rmdPrice: string;
-  bnbPrice: string;
-  chainId: ContractKey;
-  nativeSymbol: string;
-  nativeBalance: string;
+  rmdPrice: Number | null;
+  usdcPrice: Number | null;
+  chainId: ChainId;
+  address: string;
+  usdcBalance: string;
   rmdBalance: bigint;
   rmdBalanceFormatted: string;
   totalRaised: number;
 }) {
-  const { address } = useAccount();
   const { openConnectModal } = useConnectModal();
-
-  const [mode, setMode] = useState(BUY_WITH_NATIVE);
+  const [mode, setMode] = useState(BUY_WITH_USDC);
   const [valueA, setValueA] = useState<string>("");
 
-  const tokenIn =
-    mode === BUY_WITH_NATIVE
-      ? contracts[chainId].wbnb.address
-      : contracts[chainId].rmd.address;
-
-  const amountIn = parseEther(valueA as `${number}`);
-  const amountOut = BigInt("0"); //useGetAmountsOut(amountIn, [tokenIn, tokenOut]);
-
-  const allowance = useAllowance(tokenIn, contracts[chainId].rmdv2.address);
-  const formattedAmountOut = Number(formatEther(amountOut as bigint)).toFixed(
-    5
+  const tokenIn = useMemo(
+    () =>
+      mode === BUY_WITH_USDC
+        ? contracts[chainId].usdc.address
+        : contracts[chainId].rmd.address,
+    [mode, chainId]
+  );
+  const amountIn = useMemo(() => parseEther(valueA as `${number}`), [valueA]);
+  const priceIn = useMemo(
+    () =>
+      (mode === BUY_WITH_USDC
+        ? Number(valueA) * Number(usdcPrice)
+        : Number(valueA) * Number(rmdPrice)
+      ).toFixed(2),
+    [mode, valueA, usdcPrice, rmdPrice]
   );
 
-  const priceIn = (
-    mode === BUY_WITH_NATIVE
-      ? Number(valueA) * Number(bnbPrice)
-      : Number(valueA) * Number(rmdPrice)
-  ).toFixed(2);
+  const amountOut = BigInt("0"); //useGetAmountsOut(amountIn, [tokenIn, tokenOut]);
+  const formattedAmountOut = useMemo(
+    () => Number(formatEther(amountOut as bigint)).toFixed(5),
+    [amountOut]
+  );
   const priceOut = (
-    mode === BUY_WITH_NATIVE
-      ? Number(formattedAmountOut) * Number(rmdPrice)
-      : Number(formattedAmountOut) * Number(bnbPrice)
+    mode === BUY_WITH_USDC
+      ? Number(formattedAmountOut) * Number(usdcPrice)
+      : Number(formattedAmountOut) * Number(rmdPrice)
   ).toFixed(2);
 
-  const approveTX = useApprove(amountIn);
-  const buyTX = useBuy(amountIn, tokenIn);
+  const allowance = useAllowance(
+    tokenIn as Address,
+    contracts[chainId].rmdv2.address as Address
+  );
+  const approveTX = useApprove(
+    amountIn,
+    tokenIn as Address,
+    contracts[chainId].rmdv2.address as Address
+  );
+  const buyTX = useBuyPresale(tokenIn, amountIn);
 
   function swapAssets() {
-    setMode(mode === BUY_WITH_NATIVE ? BUY_WITH_RMD : BUY_WITH_NATIVE);
+    setMode(mode === BUY_WITH_USDC ? BUY_WITH_RMD : BUY_WITH_USDC);
   }
 
   function getButtonText() {
@@ -83,15 +94,40 @@ export default function Presale({
   }
 
   return (
-    <div className="m-auto w-full md:w-1/3 backdrop-blur-md bg-slate-100/20">
-      <h2 className="uppercase h-14 w-full relative text-3xl text-center flex items-center justify-center">
+    <div className="w-full backdrop-blur-md bg-gradient-to-b from-transparent to-slate-100/20 shadow-lg rounded-md">
+      <h2 className="uppercase h-14 w-full relative text-xl md:text-3xl text-center flex items-center justify-center">
         <Image
           src={lines}
           alt="lines"
           className="absolute left-0 top-0 w-full h-full -scale-x-100"
         />
-        <div className="z-10 flex items-center gap-5">
-          PRESALE RMDv2 <GiBuyCard size={30} className="text-green-400" />
+        <div className="relative z-10 flex items-center gap-5">
+          <div className="whitespace-nowrap">PRESALE RMDv2</div>
+
+          <div className="w-full flex justify-center gap-2">
+            <button
+              onClick={() => setMode(BUY_WITH_USDC)}
+              className={`relative ${
+                mode === BUY_WITH_USDC ? "bg-green-400/80" : "bg-slate-300"
+              } w-10 h-10 hover:bg-green-400 group cursor-pointer flex justify-center items-center hover:text-black transition-colors duration-500 rounded-md p-1`}
+            >
+              <div className="z-10">
+                <Image src={usdc} alt="usdc" />
+              </div>
+            </button>
+            {chainId === BSC && (
+              <button
+                onClick={() => setMode(BUY_WITH_RMD)}
+                className={`relative ${
+                  mode === BUY_WITH_RMD ? "bg-green-400/80" : "bg-slate-300"
+                } w-10 h-10 group hover:bg-green-400 cursor-pointer flex justify-center items-center hover:text-black transition-colors duration-500 rounded-md p-1`}
+              >
+                <div className="z-10">
+                  <Image src={rmd} alt="usdc" />
+                </div>
+              </button>
+            )}
+          </div>
         </div>
       </h2>
       <div className="w-full p-5">
@@ -105,65 +141,59 @@ export default function Presale({
             <div className="font-bold">655,134 RMDv2</div>
           </div>
         </div>
-        <div className="mt-5 w-full flex bg-slate-100/20 items-center h-16 px-3 gap-5">
+        <div className="mt-5 w-full flex bg-slate-100/20 items-center h-16 px-3 gap-2 rounded-md">
           <input
             value={valueA}
             onChange={(e) => setValueA(e.target.value)}
             type="number"
             placeholder="0.00"
-            className="text-slate-100 w-full outline-none bg-transparent text-xl"
+            className="text-slate-100 w-full outline-none bg-transparent"
           />
           <div>${priceIn}</div>
           <div
             onClick={() => {
-              if (mode === BUY_WITH_NATIVE && nativeBalance) {
-                setValueA((Number(nativeBalance) - 0.001).toString());
+              if (mode === BUY_WITH_USDC && usdcBalance) {
+                setValueA((Number(usdcBalance) - 0.001).toString());
               } else if (mode === BUY_WITH_RMD && rmdBalance) {
                 setValueA(formatEther(rmdBalance));
               }
             }}
-            className="group cursor-pointer relative whitespace-nowrap gap-2 px-2 flex items-center border-[1px] border-slate-100/20 h-10 hover:text-black transition-colors duration-500"
+            className="group cursor-pointer relative whitespace-nowrap gap-2 px-2 flex items-center outline outline-1 outline-slate-100/20 h-10 hover:text-black transition-colors duration-500  rounded-md"
           >
             <div className="z-10 flex gap-2 items-center">
-              {mode === BUY_WITH_NATIVE ? (
-                <span>
-                  {nativeBalance ? Number(nativeBalance).toFixed(4) : 0}{" "}
-                  {nativeSymbol}
-                </span>
+              {mode === BUY_WITH_USDC ? (
+                <span>{usdcBalance && Number(usdcBalance) ? Number(usdcBalance).toFixed(4) : 0}</span>
               ) : (
                 <span>
-                  {" "}
-                  {rmdBalance ? Number(rmdBalanceFormatted).toFixed(4) : 0}{" "}
-                  RMDv2
+                  {rmdBalance ? Number(rmdBalanceFormatted).toFixed(4) : 0}
                 </span>
               )}
 
               <GiWallet size={18} />
             </div>
-            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className=" rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </div>
         </div>
 
-        <div className="mt-2 w-full flex bg-slate-100/5 items-center h-16 px-3">
-          <div className="flex gap-2 items-center w-full text-slate-100 text-xl">
+        <div className="mt-2 w-full flex bg-slate-100/5 items-center h-16 px-3 rounded-md">
+          <div className="flex gap-2 items-center w-full text-slate-100">
             <div>{formattedAmountOut ? formattedAmountOut : "0.00"}</div>
           </div>
-          <div>{mode === BUY_WITH_NATIVE ? "RMDv2" : nativeSymbol}</div>
+          <div>RMDv2</div>
         </div>
 
         {/* Approve */}
         {!address ? (
           <button
             onClick={openConnectModal}
-            className="mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center border-[1px] border-slate-100/20 bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
+            className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
           >
             <div className="z-10">
               <span>CONNECT WALLET</span>
             </div>
-            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className=" rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </button>
-        ) : mode === BUY_WITH_RMD &&
-          Number(formatEther(allowance)) < Number(valueA) ? (
+        ) : Number(formatEther(allowance)) < Number(valueA) ? (
           <button
             disabled={!approveTX.transaction.write}
             onClick={() => {
@@ -171,7 +201,7 @@ export default function Presale({
                 approveTX.transaction.write();
               }
             }}
-            className="mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center border-[1px] border-slate-100/20 bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
+            className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
           >
             <div className="z-10">
               {approveTX.confirmation.isLoading ? (
@@ -180,10 +210,10 @@ export default function Presale({
                   <GiFizzingFlask size={30} className="flask-loading" />
                 </span>
               ) : (
-                <span>APPROVE RMD</span>
+                <span>APPROVE</span>
               )}
             </div>
-            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className="rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </button>
         ) : (
           // Swap
@@ -194,10 +224,10 @@ export default function Presale({
                 buyTX.transaction.write();
               }
             }}
-            className="mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center border-[1px] border-slate-100/20 bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
+            className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
           >
             <div className="z-10">{getButtonText()}</div>
-            <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            <div className="rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
           </button>
         )}
       </div>

@@ -17,7 +17,7 @@ export default function useBuy(amountIn: BigInt, tokenIn: string) {
     functionName: "swapExactTokensForTokens",
     args: [amountIn, tokenIn, address],
     value:
-      tokenIn === contracts[56].wbnb.address ? (amountIn as bigint) : undefined,
+      tokenIn === contracts[56].wnative.address ? (amountIn as bigint) : undefined,
     onError(err) {
       console.error(err);
     },

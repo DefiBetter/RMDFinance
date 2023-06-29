@@ -1,15 +1,16 @@
 import { Address, useAccount, useContractRead } from "wagmi";
 import { contracts } from "../statics/contract";
 import { parseEther } from "viem";
+import { erc20ABI } from "wagmi";
 
-export default function useAllowance(tokenIn: string, spender: string) {
+export default function useAllowance(tokenIn: Address, spender: Address) {
   const { address } = useAccount();
 
   const { data } = useContractRead({
     address: tokenIn as Address,
-    abi: contracts[56].rmd.abi,
+    abi: erc20ABI,
     functionName: "allowance",
-    args: [address as Address, spender as Address],
+    args: [address as Address, spender],
     watch: true,
   });
 

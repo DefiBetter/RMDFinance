@@ -1,15 +1,13 @@
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { Chakra_Petch } from "next/font/google";
-import { Providers } from "./provider";
+import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import { Suspense } from "react";
-import LoadingScreen from "../components/LoadingScreen";
-
-export const metadata = {
-  title: `RMD | ReMeDy`,
-  description: "The Remedy to Defi",
-};
+import Header from "../components/Header";
+import BackgroundDecoration from "../components/BackgroundDecoration";
+import { Metadata } from "next";
+import Web2Provider from "../contexts/web2Context";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -18,7 +16,14 @@ const chakra = Chakra_Petch({
   weight: ["400", "700"],
 });
 
-export default function RootLayout({
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "RMD | ReMeDy",
+    description: "The Remedy to Defi",
+  };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -26,9 +31,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${chakra.className}`}>
-        <Suspense fallback={<LoadingScreen />}>
-          <Providers>{children}</Providers>
-        </Suspense>
+        <BackgroundDecoration />
+        <Providers>
+          <Web2Provider>
+            <main className="relative flex flex-col gap-20 items-center justify-center overflow-hidden">
+              <Header />
+              {children}
+            </main>
+          </Web2Provider>
+        </Providers>
         <Analytics />
       </body>
     </html>

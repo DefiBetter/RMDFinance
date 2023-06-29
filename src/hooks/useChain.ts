@@ -1,9 +1,9 @@
 import { useNetwork } from "wagmi";
-import { BSC, ContractKey, SUPPORTED_CHAIN_IDS } from "../statics/contract";
+import { ChainId, ETH, SUPPORTED_CHAIN_IDS } from "../statics/contract";
 
 export default function useChain() {
-  function supportedChainId(chainId: number = BSC) : ContractKey {
-    return SUPPORTED_CHAIN_IDS.includes(chainId) ? chainId as ContractKey : BSC;
+  function supportedChainId(chainId: number = ETH) : ChainId {
+    return SUPPORTED_CHAIN_IDS.includes(chainId) ? chainId as ChainId : ETH;
   }
 
   const { chain } = useNetwork();

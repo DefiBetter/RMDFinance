@@ -13,11 +13,11 @@ import {
   ledgerWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { arbitrum, bsc, polygon } from "wagmi/chains";
+import { arbitrum, bsc, mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bsc, arbitrum, polygon],
+  [mainnet, arbitrum, bsc],
   [publicProvider()]
 );
 

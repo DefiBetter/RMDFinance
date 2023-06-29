@@ -1,28 +1,26 @@
+import { MerkleTree } from "merkletreejs";
+import { Address, keccak256 } from "viem";
 import {
-  Address,
   useAccount,
-  useContractRead,
   useContractWrite,
-  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 import { contracts } from "../statics/contract";
+import useChain from "./useChain";
+import useMerkleProof from "./useMerkleProof";
 
-export default function useSwap(
-  amountIn: BigInt,
-  tokenIn: string,
-  tokenOut: string,
-  amountOutWithSlippage: BigInt
-) {
+export default function useBuyPresale(tokenIn: string, amountIn: BigInt) {
   const { address } = useAccount();
+  const { proof, whitelisted } = useMerkleProof(address as Address);
+  const chain = useChain();
+
   const preparation = usePrepareContractWrite({
-    address: contracts[56].pancakeRouterV3.address as Address,
-    abi: contracts[56].pancakeRouterV3.abi,
-    functionName: "swapExactTokensForTokens",
-    args: [amountIn, amountOutWithSlippage, [tokenIn, tokenOut], address],
-    value:
-      tokenIn === contracts[56].wnative.address ? (amountIn as bigint) : undefined,
+    address: contracts[chain].pancakeRouterV3.address as Address,
+    abi: contracts[chain].pancakeRouterV3.abi,
+    functionName: "buy",
+    args: [tokenIn, amountIn, proof],
+    enabled: whitelisted,
     onError(err) {
       console.error(err);
     },

@@ -16,9 +16,10 @@ import Presale from "../components/Presale/Presale";
 import useChain from "../hooks/useChain";
 import useTokenBalance from "../hooks/useTokenBalance";
 import { contracts } from "../statics/contract";
-import Roadmap from "../components/Roadmap";
+import Roadmap from "../components/Roadmap/Roadmap";
 import { useAccount } from "wagmi";
 import { useWeb2Context } from "../contexts/web2Context";
+import useTotalRaised from "../hooks/useTotalRaised";
 
 export default function Home() {
   const chainId = useChain();
@@ -27,7 +28,7 @@ export default function Home() {
   const rmdBalance = useTokenBalance(contracts[chainId].rmd.address);
   const usdcBalance = useTokenBalance(contracts[chainId].usdc.address);
   const { rmdPrice, wNativePrice, usdcPrice } = useWeb2Context();
-  const totalRaise = 245021;
+  const { totalRaised, totalRaisedPercent, target } = useTotalRaised();
 
   return (
     <>
@@ -61,7 +62,7 @@ export default function Home() {
             href="#roadmap"
             className="flex justify-center w-full md:w-1/2 h-16 mt-5"
           >
-            <div className="rounded-md shadow-lg backdrop-blur-md group cursor-pointer relative w-full flex justify-center items-center outline outline-1 outline-slate-100/20 h-full hover:text-black transition-colors duration-500">
+            <div className="rounded-md shadow-lg backdrop-blur-md group cursor-pointer relative w-full flex justify-center items-center outline outline-1 outline-slate-100/20 h-full hover:text-black bg-slate-100/20 transition-colors duration-500">
               <div className="z-10 font-bold flex items-center gap-4">
                 OUR ROADMAP
                 <GiRoad
@@ -87,7 +88,9 @@ export default function Home() {
             usdcBalance={usdcBalance ? usdcBalance?.formatted : "0.00"}
             rmdBalance={rmdBalance ? rmdBalance.value : (BigInt("0") as bigint)}
             rmdBalanceFormatted={rmdBalance ? rmdBalance.formatted : "0.00"}
-            totalRaised={totalRaise}
+            totalRaised={totalRaised}
+            totalRaisedPercent={totalRaisedPercent}
+            target={target}
           />
         </motion.div>
       </section>

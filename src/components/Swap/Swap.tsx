@@ -9,13 +9,13 @@ import {
   GiFizzingFlask,
 } from "react-icons/gi";
 import { createRef, useRef, useState } from "react";
-import useGetAmountsOut from "../hooks/useGetAmountsOut";
+import useGetAmountsOut from "../../hooks/useGetAmountsOut";
 import { formatEther, parseEther } from "viem";
-import useSwap from "../hooks/useSwap";
-import { contracts } from "../statics/contract";
-import useAllowance from "../hooks/useAllowance";
-import useTokenBalance from "../hooks/useTokenBalance";
-import useApprove from "../hooks/useApprove";
+import useSwap from "../../hooks/useSwap";
+import { contracts } from "../../statics/contract";
+import useAllowance from "../../hooks/useAllowance";
+import useTokenBalance from "../../hooks/useTokenBalance";
+import useApprove from "../../hooks/useApprove";
 
 const BUY = 0;
 const SELL = 1;

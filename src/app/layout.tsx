@@ -4,7 +4,7 @@ import { Chakra_Petch } from "next/font/google";
 import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import { Suspense } from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import BackgroundDecoration from "../components/BackgroundDecoration";
 import { Metadata } from "next";
 import Web2Provider from "../contexts/web2Context";

@@ -14,7 +14,7 @@ import {
   GiStoneBridge,
 } from "react-icons/gi";
 import Link from "next/link";
-import { useWeb2Context } from "../contexts/web2Context";
+import { useWeb2Context } from "../../contexts/web2Context";
 
 export default function Header() {
   const { rmdPrice } = useWeb2Context();

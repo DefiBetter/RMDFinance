@@ -1,6 +1,6 @@
 import { Address, useAccount, useContractRead } from "wagmi";
-import destinationToL0, { ChainId, contracts } from "../statics/contract";
 import { hexToBytes, padBytes, toHex } from "viem";
+import { ChainId, chains } from "../statics/helpers/chains";
 
 export default function useBridgeEstimateOut(
   amountIn: BigInt,
@@ -9,13 +9,15 @@ export default function useBridgeEstimateOut(
 ) {
   const { address } = useAccount();
 
+  const l0Id = destinationChainId ? chains[destinationChainId].l0Id : 0;
+
   const { data } = useContractRead({
-    address: contracts[fromChainId].ocg.address as Address,
-    abi: contracts[fromChainId].ocg.abi,
+    address: chains[fromChainId].contracts.ocg.address as Address,
+    abi: chains[fromChainId].contracts.ocg.abi,
     functionName: "estimateSendFee",
     enabled: (amountIn as bigint) > 0 && destinationChainId != null,
     args: [
-      destinationToL0(destinationChainId),
+      l0Id,
       `0x000000000000000000000000${address?.substring(2)}`,
       amountIn,
       false,

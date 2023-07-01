@@ -6,9 +6,9 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { contracts } from "../statics/contract";
 import useChain from "./useChain";
 import useMerkleProof from "./useMerkleProof";
+import { chains } from "../statics/helpers/chains";
 
 export default function useBuyPresale(tokenIn: string, amountIn: BigInt) {
   const { address } = useAccount();
@@ -16,8 +16,8 @@ export default function useBuyPresale(tokenIn: string, amountIn: BigInt) {
   const chain = useChain();
 
   const preparation = usePrepareContractWrite({
-    address: contracts[chain].pancakeRouterV3.address as Address,
-    abi: contracts[chain].pancakeRouterV3.abi,
+    address: chains[chain].contracts.pancakeRouterV3.address as Address,
+    abi: chains[chain].contracts.pancakeRouterV3.abi,
     functionName: "buy",
     args: [tokenIn, amountIn, proof],
     enabled: whitelisted,

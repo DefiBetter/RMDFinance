@@ -16,7 +16,7 @@ type ToastContextType = {
     type: TOAST_TYPE,
     title: string,
     subtitle: string,
-    explorer: string,
+    explorer: string | null,
     hash: string
   ) => void;
 };
@@ -35,7 +35,7 @@ export default function ToastProvider({ children }: Props) {
     type: TOAST_TYPE,
     title: string,
     subtitle: string,
-    explorer: string,
+    explorer: string | null,
     hash: string
   ) {
     toast.custom(
@@ -53,10 +53,10 @@ export default function ToastProvider({ children }: Props) {
         return (
           <motion.div
             key={hash}
-            initial={{ translateX: "1000px" }}
+            initial={{ translateX: "-1000px" }}
             animate={{ translateX: 0 }}
             transition={{ ease: "backInOut", duration: 0.7 }}
-            exit={{ translateX: "1000px" }}
+            exit={{ translateX: "-1000px" }}
             className={containerClass}
           >
             <div className="flex-1 w-0">
@@ -70,13 +70,16 @@ export default function ToastProvider({ children }: Props) {
                 </div>
               </div>
             </div>
-            <a href={`${explorer}/transaction/${hash}`} target="_blank">
-              <BiLinkExternal
-                size={20}
-                className="text-slate-200 hover:animate-wiggle"
-                onClick={() => toast.dismiss(t.id)}
-              />
-            </a>
+            {explorer && hash && (
+              <a href={`${explorer}tx/${hash}`} target="_blank">
+                <BiLinkExternal
+                  size={20}
+                  className="text-slate-200 hover:animate-wiggle"
+                  onClick={() => toast.dismiss(t.id)}
+                />
+              </a>
+            )}
+
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -94,7 +97,7 @@ export default function ToastProvider({ children }: Props) {
 
   return (
     <ToastContext.Provider value={{ showToast }}>
-      <Toaster position="bottom-right" />
+      <Toaster position="bottom-left" />
       {children}
     </ToastContext.Provider>
   );

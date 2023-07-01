@@ -1,5 +1,4 @@
 import { Address, useAccount, useContractRead } from "wagmi";
-import { contracts } from "../statics/contract";
 import { parseEther } from "viem";
 import { erc20ABI } from "wagmi";
 

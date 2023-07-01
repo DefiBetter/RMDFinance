@@ -15,19 +15,19 @@ import {
 import Presale from "../components/Presale/Presale";
 import useChain from "../hooks/useChain";
 import useTokenBalance from "../hooks/useTokenBalance";
-import { contracts } from "../statics/contract";
 import Roadmap from "../components/Roadmap/Roadmap";
 import { useAccount } from "wagmi";
 import { useWeb2Context } from "../contexts/web2Context";
 import useTotalRaised from "../hooks/useTotalRaised";
+import { chains } from "../statics/helpers/chains";
 
 export default function Home() {
   const chainId = useChain();
   const { address } = useAccount();
   // const nativeBalance = useTokenBalance(undefined);
-  const rmdBalance = useTokenBalance(contracts[chainId].rmd.address);
-  const usdcBalance = useTokenBalance(contracts[chainId].usdc.address);
-  const { rmdPrice, wNativePrice, usdcPrice } = useWeb2Context();
+  const rmdBalance = useTokenBalance(chains[chainId].contracts.rmd.address);
+  const usdcBalance = useTokenBalance(chains[chainId].contracts.usdc.address);
+  const web2Context = useWeb2Context();
   const { totalRaised, totalRaisedPercent, target } = useTotalRaised();
 
   return (
@@ -81,8 +81,8 @@ export default function Home() {
           className="m-auto w-full lg:w-1/3"
         >
           <Presale
-            rmdPrice={rmdPrice}
-            usdcPrice={usdcPrice}
+            rmdPrice={web2Context ? web2Context.rmdPrice : null}
+            usdcPrice={web2Context ? web2Context.usdcPrice : null}
             chainId={chainId}
             address={address as string}
             usdcBalance={usdcBalance ? usdcBalance?.formatted : "0.00"}

@@ -7,7 +7,9 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { contracts } from "../statics/contract";
+
+// WILL FIX LATER
+import { contracts } from "../statics/helpers/contract";
 
 export default function useBuy(amountIn: BigInt, tokenIn: string) {
   const { address } = useAccount();

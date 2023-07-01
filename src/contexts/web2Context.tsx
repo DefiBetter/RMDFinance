@@ -6,14 +6,7 @@ import {
   useContext,
   useEffect,
 } from "react";
-import {
-  ARB,
-  BSC,
-  ChainId,
-  ETH,
-  POLYGON,
-  chainIdToFetchURL,
-} from "../statics/contract";
+import { ARB, BSC, ChainId, ETH, chains } from "../statics/helpers/chains";
 
 type Web2ContextType = {
   rmdPrice: number | null;
@@ -37,7 +30,7 @@ export default function Web2Provider({ children }: Props) {
   const [usdcPrice, setUsdcPrice] = useState<number>(1);
 
   async function fetchNativePrice(chainId: ChainId) {
-    const url = chainIdToFetchURL(chainId);
+    const url = chains[chainId].priceURL;
     if (url) {
       const req = await fetch(url, { next: { revalidate: 10 } });
       const priceData = await req.json();

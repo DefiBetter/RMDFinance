@@ -7,27 +7,28 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import destinationToL0, { ChainId, contracts } from "../statics/contract";
+import { ChainId, chains } from "../statics/helpers/chains";
 import { TOAST_TYPE, useToastContext } from "../contexts/ToastContext";
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
-import { useToaster } from "react-hot-toast/headless";
 
 export default function useBridge(
   value: BigInt,
   amountIn: BigInt,
   fromChainId: ChainId,
-  destinationChainId: ChainId
+  destinationChainId: ChainId | null
 ) {
   const { address } = useAccount();
   const toast = useToastContext();
 
+  const l0Id = destinationChainId ? chains[destinationChainId].l0Id : 0;
   const preparation = usePrepareContractWrite({
-    address: contracts[fromChainId].ocg.address as Address,
-    abi: contracts[fromChainId].ocg.abi,
+    address: chains[fromChainId].contracts.ocg.address as Address,
+    abi: chains[fromChainId].contracts.ocg.abi,
     functionName: "sendFrom",
+    enabled: destinationChainId != null,
     args: [
       address,
-      destinationToL0(destinationChainId),
+      l0Id,
       `0x000000000000000000000000${address?.substring(2)}`,
       amountIn,
       [address, NULL_ADDRESS, "0x"],
@@ -35,25 +36,18 @@ export default function useBridge(
     value: value as bigint,
     onError(err) {
       console.error(err);
-      toast?.showToast(
-        TOAST_TYPE.ERROR,
-        "Bridge",
-        `Failed to bridge your OCG`,
-        chainIdToExplorer(fromChainId),
-        transaction.data?.hash as string
-      );
     },
   });
 
   const transaction = useContractWrite({
     ...preparation.config,
     onError(err) {
-      console.log("tx error");
       console.error(err);
       toast?.showToast(
         TOAST_TYPE.ERROR,
         "Bridge",
-        `Failed to bridge your OCG`,
+        err.cause ? (err.cause as any).details : `Failed to bridge your OCG`,
+        chains[fromChainId].explorer,
         transaction.data?.hash as string
       );
     },
@@ -68,7 +62,8 @@ export default function useBridge(
       toast?.showToast(
         TOAST_TYPE.SUCCESS,
         "Bridge",
-        `Successfully bridge your OCG`,
+        `Successfully bridged your OCG`,
+        chains[fromChainId].explorer,
         transaction.data?.hash as string
       );
     },

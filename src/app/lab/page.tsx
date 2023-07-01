@@ -2,16 +2,16 @@
 import { motion } from "framer-motion";
 import useChain from "../../hooks/useChain";
 import useTokenBalance from "../../hooks/useTokenBalance";
-import { contracts } from "../../statics/contract";
 import { Address, useAccount } from "wagmi";
 import { useWeb2Context } from "../../contexts/web2Context";
 import BridgeBox from "@/src/components/Bridge/BridgeBox";
+import { chains } from "@/src/statics/helpers/chains";
 
 export default function Lab() {
   const chainId = useChain();
   const { address } = useAccount();
-  const rmdBalance = useTokenBalance(contracts[chainId].rmd.address);
-  const { rmdPrice } = useWeb2Context();
+  const rmdBalance = useTokenBalance(chains[chainId].contracts.rmd.address);
+  const web2Context = useWeb2Context();
 
   return (
     <>

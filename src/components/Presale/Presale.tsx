@@ -9,7 +9,7 @@ import useApprove from "../../hooks/useApprove";
 import useBuyPresale from "@/src/hooks/useBuyPresale";
 import usdc from "@/src/statics/images/USDC.png";
 import rmd from "@/src/statics/images/logo.png";
-import { ARB, BSC, ChainId, ETH, contracts } from "../../statics/contract";
+import { ARB, BSC, ChainId, ETH, chains } from "../../statics/helpers/chains";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import ethLogo from "@/src/statics/images/eth-logo.svg";
 import arbLogo from "@/src/statics/images/arb-logo.svg";
@@ -50,8 +50,8 @@ export default function Presale({
   const tokenIn = useMemo(
     () =>
       mode === BUY_WITH_USDC
-        ? contracts[chainId].usdc.address
-        : contracts[chainId].rmd.address,
+        ? chains[chainId].contracts.usdc.address
+        : chains[chainId].contracts.rmd.address,
     [mode, chainId]
   );
 
@@ -78,12 +78,12 @@ export default function Presale({
 
   const allowance = useAllowance(
     tokenIn as Address,
-    contracts[chainId].ocg.address as Address
+    chains[chainId].contracts.ocg.address as Address
   );
   const approveTX = useApprove(
     amountIn,
     tokenIn as Address,
-    contracts[chainId].ocg.address as Address
+    chains[chainId].contracts.ocg.address as Address
   );
   const buyTX = useBuyPresale(tokenIn, amountIn);
 
@@ -294,8 +294,8 @@ export default function Presale({
                   approveTX.transaction.write();
                 }
               }}
-              className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
-            >
+              className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-green-400/70 disabled:bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
+              >
               <div className="z-10">
                 {approveTX.confirmation.isLoading ? (
                   <span className="flex gap-3 items-center font-bold">

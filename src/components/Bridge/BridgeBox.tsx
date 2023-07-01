@@ -1,15 +1,10 @@
 "use client";
 import lines from "@/src/statics/images/lines.svg";
 import Image from "next/image";
-import {
-  GiWallet,
-  GiFizzingFlask,
-  GiBridge,
-  GiCableStayedBridge,
-} from "react-icons/gi";
+import { GiWallet, GiFizzingFlask, GiCableStayedBridge } from "react-icons/gi";
 import { useEffect, useMemo, useState } from "react";
 import { formatEther, formatUnits, parseEther } from "viem";
-import { ARB, BSC, ChainId, ETH, POLYGON } from "../../statics/contract";
+import { ARB, BSC, ChainId, ETH, POLYGON } from "../../statics/helpers/chains";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import ethLogo from "@/src/statics/images/eth-logo.svg";
 import arbLogo from "@/src/statics/images/arb-logo.svg";
@@ -54,19 +49,13 @@ export default function BridgeBox({
     chainId,
     destinationChain
   );
-  const bridgeTX = useBridge(
-    estimatedGas,
-    amountIn,
-    chainId,
-    destinationChain as ChainId
-  );
+  const bridgeTX = useBridge(estimatedGas, amountIn, chainId, destinationChain);
 
   useEffect(() => {
-    console.log('isSuccess', bridgeTX.confirmation.isSuccess)
     if (bridgeTX.confirmation.isSuccess) {
-      setValueA('')
+      setValueA("");
     }
-  }, [bridgeTX.confirmation.isSuccess])
+  }, [bridgeTX.confirmation.isSuccess]);
 
   function getButtonText() {
     if (bridgeTX.confirmation.isLoading) {
@@ -265,8 +254,11 @@ export default function BridgeBox({
             {nativePrice && (
               <span>
                 {" "}
-                (${Number(Number(formatEther(estimatedGas)) * nativePrice).toFixed(2)})
-               
+                ($
+                {Number(
+                  Number(formatEther(estimatedGas)) * nativePrice
+                ).toFixed(2)}
+                )
               </span>
             )}
           </div>
@@ -293,10 +285,12 @@ export default function BridgeBox({
                 bridgeTX.transaction.write();
               }
             }}
-            className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
+            className="rounded-md mt-5 group disabled:cursor-not-allowed relative w-full flex justify-center items-center bg-green-400/70 disabled:bg-slate-200/30 h-16 hover:text-black transition-colors duration-500"
           >
             <div className="z-10">{getButtonText()}</div>
-            <div className="rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            {bridgeTX.transaction.write && valueA && destinationChain && (
+              <div className="rounded-md z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
+            )}
           </button>
         )}
       </div>

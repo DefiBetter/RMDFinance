@@ -7,7 +7,8 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { contracts } from "../statics/contract";
+// WILL FIX LATER
+import { contracts } from "../statics/helpers/contract";
 
 export default function useSwap(
   amountIn: BigInt,

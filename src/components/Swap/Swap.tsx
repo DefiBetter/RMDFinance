@@ -12,7 +12,7 @@ import { createRef, useRef, useState } from "react";
 import useGetAmountsOut from "../../hooks/useGetAmountsOut";
 import { formatEther, parseEther } from "viem";
 import useSwap from "../../hooks/useSwap";
-import { contracts } from "../../statics/contract";
+import { contracts } from "../../statics/helpers/contract";
 import useAllowance from "../../hooks/useAllowance";
 import useTokenBalance from "../../hooks/useTokenBalance";
 import useApprove from "../../hooks/useApprove";

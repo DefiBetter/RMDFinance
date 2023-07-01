@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useWeb2Context } from "../../contexts/web2Context";
 
 export default function Header() {
-  const { rmdPrice } = useWeb2Context();
+  const web2Context = useWeb2Context();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -67,7 +67,9 @@ export default function Header() {
           href="https://dexscreener.com/bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087"
           target="_blank"
         >
-          {rmdPrice && `$${rmdPrice.toFixed(4)}`}
+          {web2Context &&
+            web2Context.rmdPrice &&
+            `$${web2Context.rmdPrice.toFixed(4)}`}
         </a>
       </nav>
     );
@@ -149,7 +151,9 @@ export default function Header() {
                 href="https://dexscreener.com/bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087"
                 target="_blank"
               >
-                {rmdPrice && `$${rmdPrice.toFixed(4)}`}
+                {web2Context &&
+                  web2Context.rmdPrice &&
+                  `$${web2Context.rmdPrice.toFixed(4)}`}
               </a>
             </div>
           </motion.div>

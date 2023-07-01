@@ -1,5 +1,7 @@
 import { Address, useContractRead, useNetwork } from "wagmi";
-import { contracts } from "../statics/contract";
+
+// WILL FIX LATER
+import { contracts } from "../statics/helpers/contract";
 
 export default function useGetAmountsOut(
   amountIn: BigInt,

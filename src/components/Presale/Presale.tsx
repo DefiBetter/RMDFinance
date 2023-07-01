@@ -78,12 +78,12 @@ export default function Presale({
 
   const allowance = useAllowance(
     tokenIn as Address,
-    contracts[chainId].rmdv2.address as Address
+    contracts[chainId].ocg.address as Address
   );
   const approveTX = useApprove(
     amountIn,
     tokenIn as Address,
-    contracts[chainId].rmdv2.address as Address
+    contracts[chainId].ocg.address as Address
   );
   const buyTX = useBuyPresale(tokenIn, amountIn);
 
@@ -94,7 +94,7 @@ export default function Presale({
   function getButtonText() {
     if (buyTX.confirmation.isLoading) {
       return (
-        <span className="flex gap-3 items-center font-bold">
+        <span className="flex gap-3 items-center font-bold text-green-400">
           BUYING ...
           <GiFizzingFlask size={30} className="flask-loading" />
         </span>

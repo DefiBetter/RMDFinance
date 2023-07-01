@@ -13,11 +13,13 @@ import {
   ledgerWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { arbitrum, bsc, mainnet } from "wagmi/chains";
+import { arbitrum, bsc, mainnet, polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import useChain from "../hooks/useChain";
+import { useWeb2Context } from "../contexts/web2Context";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, arbitrum, bsc],
+  [mainnet, arbitrum, bsc, polygon],
   [publicProvider()]
 );
 
@@ -57,6 +59,7 @@ const wagmiConfig = createConfig({
 export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider

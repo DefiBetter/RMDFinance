@@ -1,12 +1,22 @@
 import { useNetwork } from "wagmi";
 import { ChainId, ETH, SUPPORTED_CHAIN_IDS } from "../statics/contract";
+import { useEffect } from "react";
+import { useWeb2Context } from "../contexts/web2Context";
 
 export default function useChain() {
-  function supportedChainId(chainId: number = ETH) : ChainId {
-    return SUPPORTED_CHAIN_IDS.includes(chainId) ? chainId as ChainId : ETH;
+  const { chain } = useNetwork();
+  const web2Context = useWeb2Context();
+
+  useEffect(() => {
+    if (chain && web2Context && SUPPORTED_CHAIN_IDS.includes(chain?.id)) {
+      web2Context.fetchNativePrice(chain.id as ChainId);
+    }
+  }, [chain, web2Context]);
+
+  function supportedChainId(chainId: number = ETH): ChainId {
+    return SUPPORTED_CHAIN_IDS.includes(chainId) ? (chainId as ChainId) : ETH;
   }
 
-  const { chain } = useNetwork();
   if (chain) return supportedChainId(chain.id);
   return supportedChainId();
 }

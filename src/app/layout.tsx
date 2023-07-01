@@ -8,6 +8,7 @@ import Header from "../components/Header/Header";
 import BackgroundDecoration from "../components/BackgroundDecoration";
 import { Metadata } from "next";
 import Web2Provider from "../contexts/web2Context";
+import ToastProvider from "../contexts/ToastContext";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -34,10 +35,12 @@ export default async function RootLayout({
         <BackgroundDecoration />
         <Providers>
           <Web2Provider>
-            <main className="relative flex flex-col gap-20 items-center justify-center overflow-hidden">
-              <Header />
-              {children}
-            </main>
+            <ToastProvider>
+              <main className="relative flex flex-col gap-20 items-center justify-center overflow-hidden">
+                <Header />
+                {children}
+              </main>
+            </ToastProvider>
           </Web2Provider>
         </Providers>
         <Analytics />

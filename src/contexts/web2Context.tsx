@@ -6,22 +6,23 @@ import {
   useContext,
   useEffect,
 } from "react";
+import {
+  ARB,
+  BSC,
+  ChainId,
+  ETH,
+  POLYGON,
+  chainIdToFetchURL,
+} from "../statics/contract";
 
 type Web2ContextType = {
   rmdPrice: number | null;
-  wNativePrice: number | null;
+  nativePrice: number | null;
   usdcPrice: number;
+  fetchNativePrice: (chainId: ChainId) => Promise<void>;
 };
 
-const web2ContextDefaultValues: Web2ContextType = {
-  rmdPrice: null,
-  wNativePrice: null,
-  usdcPrice: 1,
-};
-
-export const Web2Context = createContext<Web2ContextType>(
-  web2ContextDefaultValues
-);
+export const Web2Context = createContext<Web2ContextType | null>(null);
 export function useWeb2Context() {
   return useContext(Web2Context);
 }
@@ -32,11 +33,20 @@ type Props = {
 
 export default function Web2Provider({ children }: Props) {
   const [rmdPrice, setRmdPrice] = useState<number | null>(null);
-  const [wNativePrice, setWNativePrice] = useState<number | null>(null);
+  const [nativePrice, setNativePrice] = useState<number | null>(null);
   const [usdcPrice, setUsdcPrice] = useState<number>(1);
 
+  async function fetchNativePrice(chainId: ChainId) {
+    const url = chainIdToFetchURL(chainId);
+    if (url) {
+      const req = await fetch(url, { next: { revalidate: 10 } });
+      const priceData = await req.json();
+      setNativePrice(Number(priceData.pairs[0].priceUsd));
+    }
+  }
+
   useEffect(() => {
-    async function fetchPrices() {
+    async function fetchEcosystemPrices() {
       try {
         const rmdReq = await fetch(
           "https://api.dexscreener.com/latest/dex/pairs/bsc/0x766d7ed89297cc97ffbc8101a78438b3d59ae087",
@@ -44,23 +54,18 @@ export default function Web2Provider({ children }: Props) {
         );
         const data = await rmdReq.json();
         setRmdPrice(Number(data.pairs[0].priceUsd));
-
-        const bnbReq = await fetch(
-          "https://api.dexscreener.com/latest/dex/pairs/bsc/0x58f876857a02d6762e0101bb5c46a8c1ed44dc16",
-          { next: { revalidate: 10 } }
-        );
-        const bnbData = await bnbReq.json();
-        setWNativePrice(Number(bnbData.pairs[0].priceUsd));
       } catch (e) {
         console.error(e);
       }
     }
 
-    fetchPrices();
+    fetchEcosystemPrices();
   }, []);
 
   return (
-    <Web2Context.Provider value={{ rmdPrice, wNativePrice, usdcPrice }}>
+    <Web2Context.Provider
+      value={{ rmdPrice, nativePrice, usdcPrice, fetchNativePrice }}
+    >
       {children}
     </Web2Context.Provider>
   );

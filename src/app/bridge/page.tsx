@@ -10,8 +10,9 @@ import BridgeBox from "@/src/components/Bridge/BridgeBox";
 export default function Home() {
   const chainId = useChain();
   const { address } = useAccount();
-  const rmdBalance = useTokenBalance(contracts[chainId].rmd.address);
-  const { rmdPrice } = useWeb2Context();
+  const ocgBalance = useTokenBalance(contracts[chainId].ocg.address);
+  const nativeBalance = useTokenBalance(undefined);
+  const web2Context = useWeb2Context();
 
   return (
     <>
@@ -25,9 +26,11 @@ export default function Home() {
           <BridgeBox
             chainId={chainId}
             address={address as Address}
-            rmdBalance={rmdBalance ? rmdBalance.value : (BigInt("0") as bigint)}
-            rmdBalanceFormatted={rmdBalance ? rmdBalance.formatted : "0"}
-            rmdPrice={rmdPrice}
+            ocgBalance={ocgBalance ? ocgBalance.value : (BigInt("0") as bigint)}
+            ocgBalanceFormatted={ocgBalance ? ocgBalance.formatted : "0"}
+            rmdPrice={web2Context ? web2Context.rmdPrice : 0}
+            nativeSymbol={nativeBalance ? nativeBalance.symbol : null}
+            nativePrice={web2Context ? web2Context.nativePrice : 0}
           />
         </motion.div>
       </section>

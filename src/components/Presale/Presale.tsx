@@ -81,6 +81,7 @@ export default function Presale({
     chains[chainId].contracts.ocg.address as Address
   );
   const approveTX = useApprove(
+    chainId,
     amountIn,
     tokenIn as Address,
     chains[chainId].contracts.ocg.address as Address

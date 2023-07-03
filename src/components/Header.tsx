@@ -65,13 +65,13 @@ export default function Header({ priceUSD }: { priceUSD: string }) {
         className="z-50 w-full flex h-16 backdrop-blur-md"
       >
         <div className="flex h-full w-full">
-          <div className="backdrop-blur-md group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500">
-            <div className="z-10">LEADERBOARD</div>
+          <a
+            href="#roadmap"
+            className="backdrop-blur-md group cursor-pointer relative w-3/4 flex justify-center items-center border-[1px] border-slate-100/20 h-full hover:text-black transition-colors duration-500"
+          >
+            <div className="z-10">ROADMAP</div>
             <div className="z-0 group-hover:w-full bg-green-400 absolute bottom-0 h-full w-0 left-0 transition-all ease-in-out duration-500" />
-            <div className="absolute bottom-1 left-1 text-xs text-green-400">
-              COMING SOON
-            </div>
-          </div>
+          </a>
           <a
             href="https://discord.gg/hYSGAXhsXw"
             target="_blank"

@@ -10,7 +10,6 @@ export const POLYGON = 137;
 export const SUPPORTED_CHAIN_IDS = [BSC, ARB, ETH, POLYGON];
 export type ChainId = keyof typeof chains;
 
-56 | 42161 | 1 | 137;
 export const chains = {
   // BSC
   56: {
@@ -32,7 +31,7 @@ export const chains = {
         abi: erc20ABI,
       },
       ocg: {
-        address: "0x51634f430f6acdd6ffb1e05e2824539d514b6086",
+        address: "0x7756eC3d5262d5cCFD70605E76A233F257a73ee2",
         abi: ocgABI,
       },
       wnative: {
@@ -132,7 +131,7 @@ export const chains = {
         abi: erc20ABI,
       },
       ocg: {
-        address: "0x65b1352751793b21598df2ab78f8e881876d1f86",
+        address: "0x8E3Da051DBaeE877710E1a19513Bd5Db1a12B33E",
         abi: ocgABI,
       },
       wnative: {

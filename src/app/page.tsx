@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative z-10 w-full px-4 md:px-7 flex flex-col md:flex-row justify-between md:justify-center items-center gap-10 md:gap-4 pb-16">
+      <section className="relative z-10 w-full px-4 md:px-7 flex flex-col md:flex-row justify-between items-center gap-10 md:gap-4 pb-16">
         <motion.div
           initial={{ translateX: "-1000px" }}
           animate={{ translateX: 0 }}
@@ -78,7 +78,7 @@ export default function Home() {
           initial={{ translateX: "1000px" }}
           animate={{ translateX: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="m-auto w-full lg:w-1/3"
+          className="w-full lg:w-1/3"
         >
           <Presale
             rmdPrice={web2Context ? web2Context.rmdPrice : null}

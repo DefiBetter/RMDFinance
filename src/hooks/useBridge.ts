@@ -31,7 +31,9 @@ export default function useBridge(
       l0Id,
       `0x000000000000000000000000${address?.substring(2)}`,
       amountIn,
-      [address, NULL_ADDRESS, "0x"],
+      address,
+      NULL_ADDRESS,
+      "0x",
     ],
     value: value as bigint,
     onError(err) {
